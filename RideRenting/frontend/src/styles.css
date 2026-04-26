@@ -1,0 +1,616 @@
+:root {
+  --bg: #0b1628;
+  --bg-surface: #0f1d33;
+  --panel: rgba(15, 29, 51, 0.92);
+  --line: rgba(74, 124, 255, 0.15);
+  --ink: #e8edf5;
+  --muted: #8a9bbd;
+  --accent: #4a7cff;
+  --accent-2: #38bdf8;
+  --success: #34d399;
+  --danger: #f87171;
+  --radius: 24px;
+  font-family: "Manrope", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(74, 124, 255, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+    var(--bg);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  transition: transform 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(74, 124, 255, 0.35);
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--accent-2);
+  border: 1px solid var(--line);
+}
+
+button.ghost:hover {
+  background: rgba(74, 124, 255, 0.08);
+  box-shadow: none;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(15, 29, 51, 0.7);
+  color: var(--ink);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74, 124, 255, 0.15);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ─── Layout ─── */
+
+.app-shell {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.top-nav {
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+/* ─── Bike Road Container ─── */
+
+.bike-road {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Road surface line */
+.road-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--accent) 15%,
+      var(--accent) 85%,
+      transparent 100%);
+  opacity: 0.3;
+}
+
+/* Dashed center lane marking */
+.road-line::before {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: repeating-linear-gradient(90deg,
+      rgba(74, 124, 255, 0.15) 0px,
+      rgba(74, 124, 255, 0.15) 20px,
+      transparent 20px,
+      transparent 40px);
+  animation: roadScroll 8ms linear infinite;
+}
+
+@keyframes roadScroll {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -40px 0;
+  }
+}
+
+/* ─── Bike Logo Animation ─── */
+
+.nav-logo {
+  position: absolute;
+  bottom: 6px;
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 12px rgba(74, 124, 255, 0.4));
+  animation: bikeRide 50s ease-in-out infinite;
+  z-index: 2;
+}
+
+/* Exhaust / dust trail behind the bike */
+.nav-logo::after {
+  content: '';
+  position: absolute;
+}
+
+/* Ride left → right with eased acceleration */
+@keyframes bikeRide {
+  0% {
+    left: -80px;
+    transform: translateY(0) rotate(0deg);
+  }
+
+  5% {
+    left: 2%;
+    transform: translateY(-1px) rotate(-1deg);
+  }
+
+  15% {
+    transform: translateY(-3px) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(0px) rotate(0.5deg);
+  }
+
+  35% {
+    transform: translateY(-2px) rotate(-0.5deg);
+  }
+
+  48% {
+    left: calc(100% - 80px);
+    transform: translateY(-1px) rotate(0deg);
+  }
+
+  50% {
+    left: calc(100% - 80px);
+    transform: translateY(0) scaleX(-1);
+  }
+
+  55% {
+    left: calc(100% - 100px);
+    transform: translateY(-1px) scaleX(-1) rotate(1deg);
+  }
+
+  65% {
+    transform: translateY(-3px) scaleX(-1) rotate(0deg);
+  }
+
+  75% {
+    transform: translateY(0px) scaleX(-1) rotate(-0.5deg);
+  }
+
+  85% {
+    transform: translateY(-2px) scaleX(-1) rotate(0.5deg);
+  }
+
+  98% {
+    left: -80px;
+    transform: translateY(-1px) scaleX(-1) rotate(0deg);
+  }
+
+  100% {
+    left: -80px;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* ─── Hero ─── */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+  min-height: 340px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(135deg, #0b1628 0%, #111f3a 50%, #0e1a30 100%);
+  border: 1px solid var(--line);
+  padding: 2rem;
+}
+
+.hero-antigravity {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(74, 124, 255, 0.4);
+}
+
+.hero h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.7rem);
+  line-height: 0.95;
+  margin: 0;
+  max-width: 12ch;
+  background: linear-gradient(135deg, #ffffff 0%, #a8c4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lede {
+  max-width: 56ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* ─── Cards & Panels ─── */
+
+.hero-card,
+.panel,
+.stat-card,
+.bike-card,
+.rental-card {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.hero-card {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  background: rgba(15, 29, 51, 0.85);
+}
+
+.panel {
+  border-radius: var(--radius);
+  padding: 1.4rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.auth-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.tab-row,
+.section-heading,
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.tab-row button {
+  flex: 1;
+  background: rgba(74, 124, 255, 0.1);
+  color: var(--accent);
+}
+
+.tab-row button.active {
+  background: var(--accent);
+  color: white;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+}
+
+.session-card {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(74, 124, 255, 0.08);
+  border: 1px solid rgba(74, 124, 255, 0.12);
+}
+
+.feedback {
+  margin: 0;
+  color: var(--accent-2);
+  font-weight: 700;
+}
+
+/* ─── Bikes ─── */
+
+.bike-grid,
+.rental-grid,
+.stats-grid,
+.admin-columns {
+  display: grid;
+  gap: 1rem;
+}
+
+.bike-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.bike-card,
+.rental-card,
+.stat-card {
+  border-radius: 22px;
+  padding: 1rem;
+}
+
+.bike-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 18px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.bike-card dl {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.bike-card dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.bike-card dt {
+  color: var(--muted);
+}
+
+/* ─── Stats ─── */
+
+.stat-card {
+  background: linear-gradient(145deg, rgba(74, 124, 255, 0.2), rgba(15, 29, 51, 0.9));
+  border: 1px solid rgba(74, 124, 255, 0.2);
+  color: white;
+  min-height: 120px;
+  display: grid;
+}
+
+.stat-card strong {
+  font-size: 2rem;
+  background: linear-gradient(135deg, #ffffff, #4a7cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Pills ─── */
+
+.pill {
+  display: inline-flex;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: rgba(74, 124, 255, 0.12);
+  color: var(--accent);
+}
+
+.pill.approved,
+.pill.completed {
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--success);
+}
+
+.pill.rejected {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger);
+}
+
+/* ─── Table ─── */
+
+.table-wrap {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ─── Slip ─── */
+
+.slip-box {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.slip-preview {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(15, 29, 51, 0.55);
+}
+
+.slip-preview a {
+  color: var(--accent-2);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.slip-preview img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--bg-surface);
+  margin-top: 0.75rem;
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 900px) {
+  .app-shell {
+    padding: 1rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 280px;
+  }
+}
+
+/* ─── Video Intro ─── */
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.skip-video-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(74, 124, 255, 0.3);
+  color: white;
+  border: 1px solid rgba(74, 124, 255, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1001;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+}
+
+.skip-video-btn:hover {
+  background: rgba(74, 124, 255, 0.5);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ─── Headings ─── */
+
+h2 {
+  color: var(--ink);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+h3 {
+  color: var(--ink);
+}
+
+a {
+  color: var(--accent-2);
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(74, 124, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 124, 255, 0.5);
+}
