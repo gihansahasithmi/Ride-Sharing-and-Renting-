@@ -1,0 +1,51 @@
+[33mcommit 17f1d79b610f0ee360e4842b8a69712622c2f1ee[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: IT25101305 <IT25101305@my.Sliit.lk>
+Date:   Mon May 18 13:59:23 2026 +0530
+
+    push to the main
+
+.idea/.gitignore
+.idea/Ride-Sharing-and-Renting-.iml
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.vscode/settings.json
+ARCHITECTURE_DIAGRAMS.md
+CODEBASE_STRUCTURE.md
+DOCUMENTATION_INDEX.md
+RideRenting/backend/admin-service/src/main/java/com/riderenting/admin/service/AdminService.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/config/AdminDataInitializer.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/config/SecurityConfig.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/domain/AdminAccount.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/domain/DriverAccount.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/domain/OwnerAccount.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/domain/Review.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/domain/UserAccount.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/dto/AuthDtos.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/repository/ReviewRepository.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/repository/UserAccountRepository.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/service/AuthService.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/service/ReviewService.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/web/AuthController.java
+RideRenting/backend/auth-service/src/main/java/com/riderenting/auth/web/ReviewController.java
+RideRenting/backend/auth-service/src/main/resources/application.yml
+RideRenting/backend/bike-service/src/main/java/com/riderenting/bike/domain/Bike.java
+RideRenting/backend/bike-service/src/main/java/com/riderenting/bike/dto/BikeDtos.java
+RideRenting/backend/bike-service/src/main/java/com/riderenting/bike/repository/BikeRepository.java
+RideRenting/backend/bike-service/src/main/java/com/riderenting/bike/service/BikeService.java
+RideRenting/backend/bike-service/src/main/java/com/riderenting/bike/web/BikeController.java
+RideRenting/backend/bike-service/src/main/resources/application.yml
+RideRenting/backend/gateway-service/src/main/resources/application.yml
+RideRenting/backend/rental-service/src/main/java/com/riderenting/rental/dto/RentalDtos.java
+RideRenting/backend/rental-service/src/main/java/com/riderenting/rental/service/RentalService.java
+RideRenting/backend/rental-service/src/main/java/com/riderenting/rental/web/RentalController.java
+RideRenting/backend/rental-service/src/main/resources/application.yml
+RideRenting/frontend/src/App.jsx
+RideRenting/frontend/src/api.js
+RideRenting/frontend/src/styles.css
+UML_DIAGRAMS.md
+WD265-RideRentingAndRideSharing
+start-platform.bat
+start-platform.ps1
