@@ -1,5 +1,6 @@
 package com.riderenting.auth.config;
 
+import com.riderenting.auth.domain.AdminAccount;
 import com.riderenting.auth.domain.UserAccount;
 import com.riderenting.auth.domain.UserRole;
 import com.riderenting.auth.repository.UserAccountRepository;
@@ -14,11 +15,8 @@ public class AdminDataInitializer {
     @Bean
     CommandLineRunner seedAdmin(UserAccountRepository userAccountRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userAccountRepository.existsByUsername("admin")) {
-                return;
-            }
-
-            UserAccount admin = new UserAccount();
+            UserAccount admin = userAccountRepository.findByUsername("admin")
+                    .orElseGet(AdminAccount::new);
             admin.setUsername("admin");
             admin.setFullName("Platform Admin");
             admin.setEmail("admin@riderenting.com");

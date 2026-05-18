@@ -1,16 +1,25 @@
 package com.riderenting.auth.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.DiscriminatorFormula;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorFormula("case role when 'OWNER' then 'OWNER' when 'DRIVER' then 'DRIVER' when 'ADMIN' then 'ADMIN' else 'USER' end")
+@DiscriminatorValue("USER")
 public class UserAccount {
 
     @Id
@@ -33,11 +42,19 @@ public class UserAccount {
     @Column(nullable = false)
     private UserRole role;
 
+    @Column(name = "account_type")
+    private String accountType;
+
     @Column(nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
     private boolean active = true;
+
+    public UserAccount() {
+        this.role = UserRole.USER;
+        syncAccountType();
+    }
 
     public Long getId() {
         return id;
@@ -85,6 +102,7 @@ public class UserAccount {
 
     public void setRole(UserRole role) {
         this.role = role;
+        syncAccountType();
     }
 
     public String getPhoneNumber() {
@@ -101,5 +119,11 @@ public class UserAccount {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void syncAccountType() {
+        this.accountType = role == null ? UserRole.USER.name() : role.name();
     }
 }

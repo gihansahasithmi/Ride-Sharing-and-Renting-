@@ -99,6 +99,46 @@ public class RentalService {
     }
 
     @Transactional
+    public RentalResponse deleteSlip(Long rentalId) {
+        Rental rental = findRental(rentalId);
+        rental.setPaymentSlip(null);
+        rental.setSlipOriginalFileName(null);
+        rental.setSlipContentType(null);
+        rental.setSlipUploadedBy(null);
+        rental.setPaymentReference(null);
+        if (rental.getStatus() == RentalStatus.PAYMENT_SUBMITTED) {
+            rental.setStatus(RentalStatus.PENDING_PAYMENT);
+        }
+        return RentalResponse.fromEntity(rentalRepository.save(rental));
+    }
+
+    @Transactional
+    public RentalResponse updateRental(Long rentalId, com.riderenting.rental.dto.RentalDtos.UpdateRentalRequest request) {
+        Rental rental = findRental(rentalId);
+        if (rental.getStatus() == RentalStatus.APPROVED || rental.getStatus() == RentalStatus.COMPLETED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot modify a rental that is already approved or completed");
+        }
+
+        rental.setHoursBooked(request.hoursBooked());
+        rental.setPickupTime(request.pickupTime());
+        rental.setReturnTime(request.pickupTime().plusHours(request.hoursBooked()));
+        rental.setTotalAmount(rental.getHourlyRate().multiply(java.math.BigDecimal.valueOf(request.hoursBooked())));
+
+        return RentalResponse.fromEntity(rentalRepository.save(rental));
+    }
+
+    @Transactional
+    public void deleteRental(Long rentalId) {
+        Rental rental = findRental(rentalId);
+        if (rental.getStatus() == RentalStatus.APPROVED || rental.getStatus() == RentalStatus.COMPLETED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete a rental that is already approved or completed");
+        }
+
+        rentalRepository.delete(rental);
+        updateBikeStatus(rental.getBikeId(), "AVAILABLE");
+    }
+
+    @Transactional
     public RentalResponse updateStatus(Long rentalId, RentalStatus status, String notes) {
         Rental rental = findRental(rentalId);
         rental.setStatus(status);

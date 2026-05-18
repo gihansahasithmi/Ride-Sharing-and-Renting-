@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
@@ -47,6 +48,13 @@ public class Bike {
 
     @Column(nullable = false)
     private String imageUrl;
+
+    private String imageOriginalFileName;
+
+    private String imageContentType;
+
+    @Lob
+    private byte[] imageData;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -138,6 +146,30 @@ public class Bike {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getImageOriginalFileName() {
+        return imageOriginalFileName;
+    }
+
+    public void setImageOriginalFileName(String imageOriginalFileName) {
+        this.imageOriginalFileName = imageOriginalFileName;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
     }
 
     public BikeStatus getStatus() {

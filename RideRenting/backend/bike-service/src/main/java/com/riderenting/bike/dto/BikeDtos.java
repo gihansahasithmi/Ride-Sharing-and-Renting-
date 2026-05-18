@@ -23,8 +23,17 @@ public final class BikeDtos {
             @NotNull @Min(50) Integer engineCapacityCc,
             @NotNull @DecimalMin("0.01") BigDecimal hourlyRate,
             @NotBlank String description,
-            @NotBlank String location,
-            @NotBlank String imageUrl
+            @NotBlank String location
+    ) {
+    }
+
+    public record UpdateBikeRequest(
+            @NotBlank String brand,
+            @NotBlank String model,
+            @NotNull @Min(50) Integer engineCapacityCc,
+            @NotNull @DecimalMin("0.01") BigDecimal hourlyRate,
+            @NotBlank String description,
+            @NotBlank String location
     ) {
     }
 

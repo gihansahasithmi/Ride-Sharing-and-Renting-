@@ -1,15 +1,20 @@
 package com.riderenting.auth.web;
 
 import com.riderenting.auth.dto.AuthDtos.AuthResponse;
+import com.riderenting.auth.dto.AuthDtos.DeleteProfileRequest;
 import com.riderenting.auth.dto.AuthDtos.LoginRequest;
 import com.riderenting.auth.dto.AuthDtos.RegisterRequest;
 import com.riderenting.auth.dto.AuthDtos.StatsResponse;
+import com.riderenting.auth.dto.AuthDtos.UpdateProfileRequest;
 import com.riderenting.auth.dto.AuthDtos.UserResponse;
 import com.riderenting.auth.service.AuthService;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,5 +47,15 @@ public class AuthController {
     @GetMapping("/stats")
     public StatsResponse getStats() {
         return authService.getStats();
+    }
+
+    @PutMapping("/profile/{id}")
+    public AuthResponse updateProfile(@PathVariable Long id, @Valid @RequestBody UpdateProfileRequest request) {
+        return authService.updateProfile(id, request);
+    }
+
+    @DeleteMapping("/profile/{id}")
+    public AuthResponse deleteProfile(@PathVariable Long id, @Valid @RequestBody DeleteProfileRequest request) {
+        return authService.deleteProfile(id, request);
     }
 }

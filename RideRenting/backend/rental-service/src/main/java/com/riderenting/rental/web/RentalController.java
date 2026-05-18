@@ -10,10 +10,12 @@ import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -43,6 +45,23 @@ public class RentalController {
                                      @RequestParam("paymentReference") String paymentReference,
                                      @RequestParam(value = "notes", required = false) String notes) {
         return rentalService.uploadSlip(rentalId, file, uploaderRole, paymentReference, notes);
+    }
+
+    @DeleteMapping("/{rentalId}/slip")
+    public RentalResponse deleteSlip(@PathVariable("rentalId") Long rentalId) {
+        return rentalService.deleteSlip(rentalId);
+    }
+
+    @PutMapping("/{rentalId}")
+    public RentalResponse updateRental(@PathVariable("rentalId") Long rentalId,
+                                       @Valid @RequestBody com.riderenting.rental.dto.RentalDtos.UpdateRentalRequest request) {
+        return rentalService.updateRental(rentalId, request);
+    }
+
+    @DeleteMapping("/{rentalId}")
+    public ResponseEntity<Void> deleteRental(@PathVariable("rentalId") Long rentalId) {
+        rentalService.deleteRental(rentalId);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{rentalId}/status")

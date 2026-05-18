@@ -24,6 +24,12 @@ public final class RentalDtos {
     ) {
     }
 
+    public record UpdateRentalRequest(
+            @NotNull @Min(1) Integer hoursBooked,
+            @NotNull LocalDateTime pickupTime
+    ) {
+    }
+
     public record RentalResponse(
             Long id,
             Long bikeId,
